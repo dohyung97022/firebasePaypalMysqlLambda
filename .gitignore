@@ -14,7 +14,7 @@
 # Environment variables that holds credential information
 .env
 
-.json
+*.json
 
 #no log files
 
