@@ -2,10 +2,23 @@ package main
 
 import (
 	"testing"
-	// "fmt"
+	"context"
+	"fmt"
+	"time"
 )
 
 func TestFuncs(t *testing.T){
+	ctx := context.Background()
+	firebase, _ := newFirebase(&ctx)
+	start := time.Now()
+	resBool, _ := firebase.getBool.varifyLoginToken("eyJhbGciOiJSUzI1NiIsImtpZCI6IjJmOGI1NTdjMWNkMWUxZWM2ODBjZTkyYWFmY2U0NTIxMWUxZTRiNDEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoi6rmA64-E7ZiVIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hLS9BT2gxNEdoMDY4YlFxTjRNSF9sS3NyLWlJZ3RJTjJDeWxhLWkyRGNSYnR1dV9nPXM5Ni1jIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2FkaXktOTc3ZDAiLCJhdWQiOiJhZGl5LTk3N2QwIiwiYXV0aF90aW1lIjoxNjA1MTYyNDg3LCJ1c2VyX2lkIjoibGRIRXBTVUM2TmRKWXdBZklKS0FtOXB6T0lnMiIsInN1YiI6ImxkSEVwU1VDNk5kSll3QWZJSktBbTlwek9JZzIiLCJpYXQiOjE2MDUxNjI0ODcsImV4cCI6MTYwNTE2NjA4NywiZW1haWwiOiJkb2h5dW5nOTcwMjJAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZ29vZ2xlLmNvbSI6WyIxMDk2ODA0NzY1MTQ5NDkzMzM2NjAiXSwiZW1haWwiOlsiZG9oeXVuZzk3MDIyQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.nSo7RRrio5lwUEn1xf4986LyJ19eaDW-r4ItfcLmmtr7p9cn2x3QXb7QVuhjK2LdjmWSGBNM7kWrB9b-4jbrADCrPIrsXu2Mh-tPTsdlH0LXkBiMpTJorPXP4ivU0gvnNGpGLGqlogO9ITx0rgKcGx7bxamE3F4CqvJErDOSLXgRHQNEjQXBWHGv_IqHDo0fMDjD5XRAurTupo_KQ4LsF9CCmIRJYz6sOXYXEWC2WzNvat-TnoghfjB3ZoDeYuL4YnfBDk_0ozKEBuCY6eYY2v0h_wNH_BZHLNUz5-PDvOiVea3l1M4Fu7PmaqMHfTsOYQh-KNzB5lYe83u73ipdUg")
+	fmt.Printf("resBool := %v\n",resBool)
+	timeTrack(start, "varifyLoginToken")
 }
 func TestMain(t *testing.T){
+}
+
+func timeTrack(start time.Time, name string) {
+	elapsed := time.Since(start)
+	fmt.Printf("%s took %s\n", name, elapsed)
 }
