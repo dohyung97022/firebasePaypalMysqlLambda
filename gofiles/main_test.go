@@ -2,18 +2,50 @@ package main
 
 import (
 	"testing"
-	"context"
+	// "context"
 	"fmt"
 	"time"
 )
 
 func TestFuncs(t *testing.T){
-	ctx := context.Background()
-	firebase, _ := newFirebase(&ctx)
-	start := time.Now()
-	resBool, _ := firebase.getBool.varifyLoginToken("eyJhbGciOiJSUzI1NiIsImtpZCI6IjJmOGI1NTdjMWNkMWUxZWM2ODBjZTkyYWFmY2U0NTIxMWUxZTRiNDEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoi6rmA64-E7ZiVIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hLS9BT2gxNEdoMDY4YlFxTjRNSF9sS3NyLWlJZ3RJTjJDeWxhLWkyRGNSYnR1dV9nPXM5Ni1jIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2FkaXktOTc3ZDAiLCJhdWQiOiJhZGl5LTk3N2QwIiwiYXV0aF90aW1lIjoxNjA1MTYyNDg3LCJ1c2VyX2lkIjoibGRIRXBTVUM2TmRKWXdBZklKS0FtOXB6T0lnMiIsInN1YiI6ImxkSEVwU1VDNk5kSll3QWZJSktBbTlwek9JZzIiLCJpYXQiOjE2MDUxNjI0ODcsImV4cCI6MTYwNTE2NjA4NywiZW1haWwiOiJkb2h5dW5nOTcwMjJAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZ29vZ2xlLmNvbSI6WyIxMDk2ODA0NzY1MTQ5NDkzMzM2NjAiXSwiZW1haWwiOlsiZG9oeXVuZzk3MDIyQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.nSo7RRrio5lwUEn1xf4986LyJ19eaDW-r4ItfcLmmtr7p9cn2x3QXb7QVuhjK2LdjmWSGBNM7kWrB9b-4jbrADCrPIrsXu2Mh-tPTsdlH0LXkBiMpTJorPXP4ivU0gvnNGpGLGqlogO9ITx0rgKcGx7bxamE3F4CqvJErDOSLXgRHQNEjQXBWHGv_IqHDo0fMDjD5XRAurTupo_KQ4LsF9CCmIRJYz6sOXYXEWC2WzNvat-TnoghfjB3ZoDeYuL4YnfBDk_0ozKEBuCY6eYY2v0h_wNH_BZHLNUz5-PDvOiVea3l1M4Fu7PmaqMHfTsOYQh-KNzB5lYe83u73ipdUg")
-	fmt.Printf("resBool := %v\n",resBool)
-	timeTrack(start, "varifyLoginToken")
+	//firebase testing
+	// ctx := context.Background()
+	// firebase, err := newFirebase(&ctx)
+	// if err!=nil{
+	// 	logger.Printf(err.Error())
+	// 	return
+	// }
+	// start := time.Now()
+	// resToken, err := firebase.getToken.fromTokenStr("")
+	// if err!=nil {
+	// 	//토큰이 valid하지 않을 경우 / 자체적인 err인 경우
+	// 	logger.Printf(err.Error())
+	// 	return
+	// }
+	// UID := firebase.getStr.UIDFromToken(resToken)
+	// fmt.Printf("UID := %v\n",UID)
+	// timeTrack(start, "varifyLoginToken")
+
+	//mysql testing
+	// mysql, err := newMysql()
+	// if err!=nil{
+	// 	return
+	// }
+	// paymentID, err = mysql.getStr.paymentIDFromUID("uidStr")
+	// if (err!=nil || paymentID == ""){
+	// 	return
+	// }
+
+	//paypal testing
+	paypal, err := newPaypal()
+	if err!=nil{
+		return
+	}
+	resStr, err := paypal.getStr.accessToken()
+	if err!=nil{
+		return
+	}
+	fmt.Printf(resStr)
 }
 func TestMain(t *testing.T){
 }

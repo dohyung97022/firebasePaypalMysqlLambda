@@ -3,14 +3,16 @@ package main
 import (
 	"context"
 	firebasePackage "firebase.google.com/go"
+	authPackage "firebase.google.com/go/auth"
 	"google.golang.org/api/option"
 )
 
 //Firebase ----------------------------------------------------------
 type Firebase struct {
-	getBool firebaseGetBool
+	getToken firebaseGetToken
 	getStr firebaseGetStr
 	app *firebasePackage.App
+	auth *authPackage.Client
 	context *context.Context
 }
 //firebase constructor
@@ -21,38 +23,42 @@ func newFirebase(serverReaderContext *context.Context)(firebase Firebase, err er
 		logger.Printf(err.Error())
 		return firebase, err
 	}
+	auth, err := app.Auth(*serverReaderContext)
+	if err != nil {
+		logger.Printf(err.Error())
+		return firebase, err
+	}
 	firebase.app = app
+	firebase.auth = auth
 	firebase.context = serverReaderContext
-	firebase.getBool.app = app
-	firebase.getBool.context = serverReaderContext
+
+	firebase.getToken.app = app
+	firebase.getToken.auth = auth
+	firebase.getToken.context = serverReaderContext
 	return firebase, nil
 }
 
-//firebase.getBool
-type firebaseGetBool struct {
+//firebase.getToken
+type firebaseGetToken struct {
 	app *firebasePackage.App
+	auth *authPackage.Client
 	context *context.Context
 }
-//firebase.getBool.varifyLoginToken
-func (firebase *firebaseGetBool) varifyLoginToken (tokenStr string) (resBool bool,err error) {
-	client, err := firebase.app.Auth(*firebase.context)
+//firebase.getToken.fromTokenStr
+func (firebase *firebaseGetToken) fromTokenStr (tokenStr string) (resToken *authPackage.Token, err error) {
+	resToken, err = firebase.auth.VerifyIDToken(*firebase.context, tokenStr)
 	if err != nil {
 		logger.Printf(err.Error())
-		return false, err
+		return nil, err
 	}
-	token, err := client.VerifyIDToken(*firebase.context, tokenStr)
-	if err != nil {
-		logger.Printf(err.Error())
-		return false, err
-	}
-	logger.Printf("Verified ID token: %v\n", token)
-	return true, nil
+	logger.Printf("Verified ID token: %v\n", resToken)
+	return resToken, nil
 }
 
-//firebase.getStrAry
+//firebase.getStr
 type firebaseGetStr struct {
 }
-//Mysql.getStrAry.UIDFromLoginToken
-func (*firebaseGetStr) UIDFromLoginToken (token string)(UID string, err error){
-	return "UID", nil
+//Mysql.getStr.UIDFromToken
+func (*firebaseGetStr) UIDFromToken (token *authPackage.Token)(UID string){
+	return token.UID
 }

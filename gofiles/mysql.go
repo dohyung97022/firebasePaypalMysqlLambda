@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -8,6 +9,7 @@ import (
 type Mysql struct {
 	DB *sql.DB
 	execute mysqlExecute
+	getStr mysqlGetStr
 	getStrAry mysqlGetStrAry
 }
 //mysql constructor
@@ -21,8 +23,9 @@ func newMysql(id string, ps string, endpoint string, port int, schema string)(my
 		return mysql, err
 	}
 	mysql.DB = DB
-	mysql.getStrAry.DB = DB
 	mysql.execute.DB = DB
+	mysql.getStr.DB = DB
+	mysql.getStrAry.DB = DB
 	return mysql, nil
 }
 
@@ -37,6 +40,23 @@ func (mysql *mysqlExecute) query (queryStr string) (err error) {
 		return err
 	}
 	return nil
+}
+
+type mysqlGetStr struct {
+	DB *sql.DB
+}
+//mysql.getStr.paymentIDFromUID
+func (mysql *mysqlGetStr) paymentIDFromUID (UIDStr string) (paymentIDStr string, err error){
+	rows, err := mysql.DB.Query(`SELECT * FROM adiy.firebase_uid WHERE uid = "`+UIDStr+`"`)
+	if err != nil {
+		return "", err
+	}
+	columns, err := rows.Columns()
+	if err != nil {
+		return "", err
+	}
+	fmt.Printf("col = %v\n", columns)
+	return "", nil
 }
 
 //mysql.getStrAry

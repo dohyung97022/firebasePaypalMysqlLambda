@@ -12,7 +12,7 @@
 *.out
 
 # Environment variables that holds credential information
-.env
+*.env
 
 *.json
 
