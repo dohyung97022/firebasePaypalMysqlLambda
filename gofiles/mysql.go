@@ -10,7 +10,7 @@ type Mysql struct {
 	execute mysqlExecute
 	getStrAry mysqlGetStrAry
 }
-//Mysql constructor
+//mysql constructor
 func newMysql(id string, ps string, endpoint string, port int, schema string)(mysql Mysql, err error){
 	DB, err := sql.Open("mysql", id+":"+ps+"@tcp("+endpoint+":"+tools.getStr.fromInt(port)+")/"+schema+"?multiStatements=true")
 	if err != nil {
@@ -30,7 +30,7 @@ func newMysql(id string, ps string, endpoint string, port int, schema string)(my
 type mysqlExecute struct {
 	DB *sql.DB
 }
-//Mysql.execute.query
+//mysql.execute.query
 func (mysql *mysqlExecute) query (queryStr string) (err error) {
 	_, err = mysql.DB.Exec(queryStr)
 	if err != nil {
@@ -43,7 +43,7 @@ func (mysql *mysqlExecute) query (queryStr string) (err error) {
 type mysqlGetStrAry struct {
 	DB *sql.DB
 }
-//Mysql.getStrAry.query
+//mysql.getStrAry.query
 func (mysql *mysqlGetStrAry) query (queryStr string)(resStrAry []string, err error){
 	rows, err := mysql.DB.Query(queryStr)
 	if err != nil {
