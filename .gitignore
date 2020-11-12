@@ -14,6 +14,8 @@
 # Environment variables that holds credential information
 .env
 
+.json
+
 #no log files
 
 # Dependency directories (remove the comment below to include it)
