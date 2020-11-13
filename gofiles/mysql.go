@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
+	"os"
 )
 //Mysql ----------------------------------------------------------
 type Mysql struct {
@@ -13,8 +15,12 @@ type Mysql struct {
 	getStrAry mysqlGetStrAry
 }
 //mysql constructor
-func newMysql(id string, ps string, endpoint string, port int, schema string)(mysql Mysql, err error){
-	DB, err := sql.Open("mysql", id+":"+ps+"@tcp("+endpoint+":"+tools.getStr.fromInt(port)+")/"+schema+"?multiStatements=true")
+func newMysql()(mysql Mysql, err error){
+	err = godotenv.Load("../mysql.env")
+	if err != nil {
+		return mysql, err
+	}
+	DB, err := sql.Open("mysql", os.Getenv("ID")+":"+os.Getenv("PS")+"@tcp("+os.Getenv("ENDPOINT")+":"+os.Getenv("PORT")+")/"+os.Getenv("SCHEMA")+"?multiStatements=true")
 	if err != nil {
 		return mysql, err
 	}
