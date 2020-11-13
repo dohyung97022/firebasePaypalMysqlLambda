@@ -39,13 +39,21 @@ func TestFuncs(t *testing.T){
 	//paypal testing
 	paypal, err := newPaypal()
 	if err!=nil{
+		fmt.Printf("err := %v\n",err.Error())
 		return
 	}
-	resStr, err := paypal.getStr.accessToken()
+	accessToken, err := paypal.getStr.accessToken()
 	if err!=nil{
+		fmt.Printf("err := %v\n",err.Error())
 		return
 	}
-	fmt.Printf(resStr)
+	subscriptionVarifyBool, err := paypal.getBool.varifyPaymentFromPaymentID("I-WG9BCLFJAPGK",accessToken)
+	if err!=nil{
+		fmt.Printf("err := %v\n",err.Error())
+		return
+	}
+	fmt.Printf("%v\n",subscriptionVarifyBool)
+	// fmt.Printf(accessToken)
 }
 func TestMain(t *testing.T){
 }

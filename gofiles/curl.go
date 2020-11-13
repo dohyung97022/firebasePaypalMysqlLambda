@@ -7,10 +7,12 @@ import(
 	"net/url"
 	"errors"
 	"io"
+	"encoding/json"
 )
 //Curl ----------------------------------------------------------
 type Curl struct {
 	getStr curlGetStr 
+	getInterface curlGetInterface
 	setRequest curlSetRequest
 }
 var curl Curl
@@ -91,7 +93,7 @@ func (*curlGetInterface) requestResults(request *http.Request, resInterf interfa
 	// 	return err
 	// }
 	defer response.Body.Close()
-	return  nil 
+	return  json.NewDecoder(response.Body).Decode(resInterf)
 }
 
 
